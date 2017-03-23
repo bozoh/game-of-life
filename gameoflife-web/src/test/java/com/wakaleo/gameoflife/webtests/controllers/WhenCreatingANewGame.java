@@ -23,20 +23,20 @@ public class WhenCreatingANewGame {
     }
 
     @Test
-    public void anEmptyUniverseShouldBeAddedToTheSession() {
+    public void anEmptyUniverseShouldBeAddedToTheSession() throws Exception {
         ModelAndView homeView = controller.newGame();
         assertThat(homeView.getModel().get("universe"), is(not(nullValue())));
     }
 
     @Test
-    public void whenTheUserCreatesTheFirstGenerationAnEmptyUniverseShouldBeAddedToTheSession() {
+    public void whenTheUserCreatesTheFirstGenerationAnEmptyUniverseShouldBeAddedToTheSession() throws Exception{
         HttpServletRequest request = mock(HttpServletRequest.class);
         ModelAndView homeView = controller.firstGeneration(5, 5, request);
         assertThat(homeView.getModel().get("universe"), is(not(nullValue())));
     }
 
     @Test
-    public void whenTheUserCreatesTheFirstGenerationTheUniverseDimensionsShouldBeAddedToTheSession() {
+    public void whenTheUserCreatesTheFirstGenerationTheUniverseDimensionsShouldBeAddedToTheSession() throws Exception {
         HttpServletRequest request = mock(HttpServletRequest.class);
         ModelAndView homeView = controller.firstGeneration(3, 5, request);
         assertThat((Integer) homeView.getModel().get("rows"), is(3));
