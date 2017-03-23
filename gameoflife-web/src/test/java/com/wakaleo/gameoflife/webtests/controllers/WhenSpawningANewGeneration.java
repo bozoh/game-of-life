@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 public class WhenSpawningANewGeneration {
 
     @Test
-    public void whenGeneratingTheNextGenerationAnUpdatedUniverseShouldBeProduced() {
+    public void whenGeneratingTheNextGenerationAnUpdatedUniverseShouldBeProduced() throws Exception{
         HttpServletRequest request = mock(HttpServletRequest.class);
         request.setAttribute("rows", "3");
         request.setAttribute("columns", "3");
