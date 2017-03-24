@@ -4,6 +4,8 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,11 +24,12 @@ import com.wakaleo.gameoflife.domain.Universe;
 public class GameController {
 	// For generating random thread sleep times
 	private Random randomGenerator = new Random();
+	private Log log = LogFactory.getLog(GameController.class);
 
 	// Clicking the "New Game" button on the main page loads the cell seletion
 	// page
 	@RequestMapping("/new") 
-	public ModelAndView newGame() throws Exception {
+	public ModelAndView newGame()  {
 		ModelAndView mav = new ModelAndView("game/edit");
 		Universe universe = new Universe();
 		mav.addObject("universe", universe);
@@ -38,7 +41,7 @@ public class GameController {
 	// step of the game
 	@RequestMapping("/start")
 	public ModelAndView firstGeneration(@RequestParam("rows") final int rows,
-			@RequestParam("columns") final int columns, final HttpServletRequest request) throws Exception{
+			@RequestParam("columns") final int columns, final HttpServletRequest request) {
 
 		Universe universe = universeInstanciatedFromClickedCells(rows, columns, request);
 		thinkABit(200); // Pause for random time
@@ -49,7 +52,7 @@ public class GameController {
 	// Clicking the "Next Generation" button loads the next step of the game
 	@RequestMapping("/next")
 	public ModelAndView nextGeneration(@RequestParam("rows") final int rows, @RequestParam("columns") final int columns,
-			final HttpServletRequest request) throws Exception {
+			final HttpServletRequest request)  {
 
 		Universe universe = universeInstanciatedFromClickedCells(rows, columns, request);
 		universe.createNextGeneration();
@@ -60,9 +63,14 @@ public class GameController {
 	}
 
 	// Pause for a random time between 0 and given input divided by 4
-	private void thinkABit(final int max) throws InterruptedException{
+	private void thinkABit(final int max) {
         int thinkingTime = getRandomGenerator().nextInt(max / 4);
-            Thread.currentThread().sleep(thinkingTime);
+            Thread.currentThread();
+			try {
+				Thread.sleep(thinkingTime);
+			} catch (InterruptedException e) {
+				log.error(e);
+			}
     }
 
 	// Creates new grid for the next step, initialize with all dead cells

@@ -13,8 +13,8 @@
         <easyb.version>1.4</easyb.version>
         <cobertura.version>2.6</cobertura.version>
         <!-- A workaround for a bug in PMD -->
-        <sourceJdk>1.7</sourceJdk>
-        <targetJdk>1.7</targetJdk>
+        <sourceJdk>1.8</sourceJdk>
+        <targetJdk>1.8</targetJdk>
         <github.account>wakaleo</github.account>
         <thucydides.version>0.9.268</thucydides.version>
         <jelastic.context>gameoflife</jelastic.context>
@@ -159,7 +159,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <storyType>html</storyType>                         l
+                        <storyType>html</storyType>                         
                         <storyReport>${basedir}/target/easyb/easyb-report.html
                         </storyReport>
                     </configuration>
@@ -204,6 +204,11 @@
             <version>1.9.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+        	<groupId>commons-logging</groupId>
+        	<artifactId>commons-logging</artifactId>
+        	<version>1.2</version>
+        </dependency>
     </dependencies>
 
     <modules>
@@ -224,20 +229,20 @@
             <build>
                 <plugins>
                     <!-- CHECKSTYLE -->
-                    <!--<plugin>-->
-                        <!--<artifactId>maven-checkstyle-plugin</artifactId>-->
-                        <!--<version>2.9.1</version>-->
-                        <!--<dependencies>-->
-                            <!--<dependency>-->
-                                <!--<groupId>com.wakaleo.gameoflife</groupId>-->
-                                <!--<artifactId>gameoflife-build</artifactId>-->
-                                <!--<version>${project.version}</version>-->
-                            <!--</dependency>-->
-                        <!--</dependencies>-->
-                        <!--<configuration>-->
-                            <!--<configLocation>custom-checkstyle.xml</configLocation>-->
-                        <!--</configuration>-->
-                    <!--</plugin>-->
+                    <plugin>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.wakaleo.gameoflife</groupId>
+                                <artifactId>gameoflife-build</artifactId>
+                                <version>${project.version}</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <configLocation>custom-checkstyle.xml</configLocation>
+                        </configuration>
+                    </plugin>
 
                     <!-- PMD -->
                     <plugin>
