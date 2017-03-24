@@ -28,8 +28,8 @@ public class GameController {
 
 	// Clicking the "New Game" button on the main page loads the cell seletion
 	// page
-	@RequestMapping("/new") 
-	public ModelAndView newGame()  {
+	@RequestMapping("/new")
+	public ModelAndView newGame() {
 		ModelAndView mav = new ModelAndView("game/edit");
 		Universe universe = new Universe();
 		mav.addObject("universe", universe);
@@ -52,7 +52,7 @@ public class GameController {
 	// Clicking the "Next Generation" button loads the next step of the game
 	@RequestMapping("/next")
 	public ModelAndView nextGeneration(@RequestParam("rows") final int rows, @RequestParam("columns") final int columns,
-			final HttpServletRequest request)  {
+			final HttpServletRequest request) {
 
 		Universe universe = universeInstanciatedFromClickedCells(rows, columns, request);
 		universe.createNextGeneration();
@@ -64,14 +64,16 @@ public class GameController {
 
 	// Pause for a random time between 0 and given input divided by 4
 	private void thinkABit(final int max) {
-        int thinkingTime = getRandomGenerator().nextInt(max / 4);
-            Thread.currentThread();
-			try {
-				Thread.sleep(thinkingTime);
-			} catch (InterruptedException e) {
-				log.error(e);
-			}
-    }
+		int thinkingTime = getRandomGenerator().nextInt(max / 4);
+		Thread.currentThread();
+		try {
+			Thread.sleep(thinkingTime);
+
+		} catch (InterruptedException e) {
+			log.warn(e);
+			Thread.currentThread().interrupt();
+		}
+	}
 
 	// Creates new grid for the next step, initialize with all dead cells
 	private Universe universeInstanciatedByDimensions(final int rows, final int columns) {
@@ -115,7 +117,7 @@ public class GameController {
 	// Determines if the user selected the checkbox at the given coordinate
 	private boolean cellWasClickedAt(final int row, final int column, final HttpServletRequest request) {
 		String cellName = "cell_" + row + "_" + column;
-		return (request.getParameter(cellName) != null);
+		return request.getParameter(cellName) != null;
 	}
 
 	// Getter for this class' random number generator
